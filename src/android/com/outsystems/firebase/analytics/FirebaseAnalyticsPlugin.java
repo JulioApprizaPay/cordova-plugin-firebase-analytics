@@ -88,26 +88,6 @@ public class FirebaseAnalyticsPlugin extends ReflectiveCordovaPlugin {
         callbackContext.success();
     }
 
-    @CordovaMethod
-    private void requestTrackingAuthorization(JSONObject params, CallbackContext callbackContext) throws JSONException {
-        //Does nothing. This is an iOS specific method.
-        callbackContext.success();
-    }
-
-    @CordovaMethod
-    private void logECommerceEvent(JSONObject params, CallbackContext callbackContext) throws JSONException {
-        try {
-            OSFANLEventOutputModel output = manager.buildOutputEventFromInputJSON(params);
-            this.firebaseAnalytics.logEvent(output.getName(), output.getParameters());
-            callbackContext.success();
-        } catch (OSFANLError e) {
-            JSONObject result = new JSONObject();
-            result.put("code", e.getCode());
-            result.put("message", e.getMessage());
-            callbackContext.error(result);
-        }
-    }
-
     private static Bundle parse(JSONObject params) throws JSONException {
         Bundle bundle = new Bundle();
         Iterator<String> it = params.keys();
